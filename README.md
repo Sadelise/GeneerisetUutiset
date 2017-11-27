@@ -1,2 +1,4 @@
-# GeneerisetUutiset
-Java Web-palvelinohjelmoinnin harjoitustyö
+﻿# GeneerisetUutiset
+
+## Heroku
+Ohjelma löytyy [herokusta](https://geneeriset-uutiset.herokuapp.com/).
