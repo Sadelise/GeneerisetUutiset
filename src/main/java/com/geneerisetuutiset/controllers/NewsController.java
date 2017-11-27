@@ -63,10 +63,10 @@ public class NewsController {
         if (picture != null && picture.getContentType().equals("image/picture")) {
             article.setPicture(picture.getBytes());
         }
-        Author author = authorRepository.findByName(authorName);
-        Category category = categoryRepository.findByName(categoryName);
-        article.addAuthor(author);
-        article.addCategory(category);
+//        Author author = authorRepository.findByName(authorName);
+//        Category category = categoryRepository.findByName(categoryName);
+//        article.addAuthor(author);
+//        article.addCategory(category);
         article.setContent(content);
         article.setIngress(ingress);
         article.setPublished(LocalDate.now());
