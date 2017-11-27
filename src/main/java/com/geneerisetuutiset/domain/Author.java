@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Author extends AbstractPersistable<Long> {
     @ManyToMany
-    private List<Article> pieceOfNewss;
+    private List<Article> articles;
     @Id
     private Long id;
     private String name;

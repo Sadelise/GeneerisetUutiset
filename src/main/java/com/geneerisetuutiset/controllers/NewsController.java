@@ -36,7 +36,20 @@ public class NewsController {
 
     @RequestMapping("/")
     public String home(Model model) {
+        Category category1 = new Category();
+        Category category2 = new Category();
+        Category category3 = new Category();
+        category1.setId(1L);
+        category2.setId(2L);
+        category3.setId(3L);
+        category1.setName("Uudet");
+        category2.setName("Vanhat");
+        category3.setName("Kotimaiset");
+        categoryRepository.save(category1);
+        categoryRepository.save(category2);
+        categoryRepository.save(category3);
         model.addAttribute("news", this.articleRepository.findAll());
+        model.addAttribute("categories", this.categoryRepository.findAll());
         return "index";
     }
 
@@ -57,11 +70,18 @@ public class NewsController {
 
     @PostMapping("/news/new")
     public String postArticle(Model model,
-            String title, String ingress, String authorName, String content, String categoryName,
+            String title, String ingress, String authorNames, String content, String categoryNames,
             @Param("file") MultipartFile picture) throws IOException {
         Article article = new Article();
-        if (picture != null && picture.getContentType().equals("image/picture")) {
+        if (picture != null && picture.getContentType().equals("image/jpeg")) {
             article.setPicture(picture.getBytes());
+        }
+        String replaceNames = authorNames.replace(" ", "").toLowerCase();
+        String replaceCategories = categoryNames.replace(" ", "").toLowerCase();
+        String[] names = replaceNames.split(",");
+        String[] categories = replaceCategories.split(",");
+        //TO DO turn names into objects
+        for (String category : categories) {
         }
 //        Author author = authorRepository.findByName(authorName);
 //        Category category = categoryRepository.findByName(categoryName);

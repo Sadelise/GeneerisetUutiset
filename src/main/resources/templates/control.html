@@ -13,19 +13,16 @@
             </li>
         </ul>
 
-        <h1>Geneeriset Uutiset</h1>
+        <h1>Hallintapaneeli</h1>
 
         <table>
             <tr>
-                <th>Otsikot</th>
+                <th>Klikkaa otsikkoa editoidaksesi</th>
                 <th></th>
             </tr>
 
             <tr th:each="article : ${news}">
-                <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-<!--                <div th:if="${article.picture != null}">
-                    <img th:src="@{/picture/{id}(id=${article.picture})}"/>
-                </div>-->
+                <td><a th:href="@{/edit/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
                 <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
             </tr>
         </table>
@@ -35,8 +32,13 @@
 
         <form action="/news/new" method="POST">
             <span>Otsikko</span>
-            <input type="text" name="title"/>
-            <input type="submit" value="Add!"/>
+            Otsikko:<input type="text" name="title"/>
+            Kirjoittaja (lisää useampia pilkulla eroteltuna):<input type="text" name="author"/>
+            Ingressi:<input type="text" name="ingressi"/>
+            Sisältö:<input type="text" name="content"/>
+            Kategoria (lisää useampia pilkulla eroteltuna):<input type="text" name="category"/>
+            Lisää kuva: <input type="text" name="title"/>
+            <input type="submit" value="Julkaise"/>
         </form>
     </body>
 </html>

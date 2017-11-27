@@ -25,9 +25,9 @@ public class Article extends AbstractPersistable<Long> {
     private byte[] picture;
     private String content;
     private LocalDate published;
-    @ManyToMany(mappedBy = "pieceOfNewss")
+    @ManyToMany(mappedBy = "articles")
     private List<Author> authors;
-    @ManyToMany(mappedBy = "pieceOfNewss")
+    @ManyToMany(mappedBy = "articles")
     private List<Category> categories;
 
     public void addAuthor(Author author) {
