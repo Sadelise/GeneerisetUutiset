@@ -95,4 +95,11 @@ public class NewsController {
         articleRepository.save(article);
         return "redirect:/";
     }
+
+    @GetMapping("/control")
+    public String controlPanel(Model model) {
+        model.addAttribute("news", this.articleRepository.findAll());
+        model.addAttribute("categories", this.categoryRepository.findAll());
+        return "control";
+    }
 }

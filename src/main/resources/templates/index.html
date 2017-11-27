@@ -23,20 +23,14 @@
 
             <tr th:each="article : ${news}">
                 <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-<!--                <div th:if="${article.picture != null}">
-                    <img th:src="@{/picture/{id}(id=${article.picture})}"/>
-                </div>-->
+                <!--                <div th:if="${article.picture != null}">
+                                    <img th:src="@{/picture/{id}(id=${article.picture})}"/>
+                                </div>-->
                 <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
             </tr>
         </table>
 
 
-        <h2>Lisää uutinen:</h2>
-
-        <form action="/news/new" method="POST">
-            <span>Otsikko</span>
-            <input type="text" name="title"/>
-            <input type="submit" value="Add!"/>
-        </form>
+        <a th:href="@{/control}">Hallintapaneeliin</a>
     </body>
 </html>
