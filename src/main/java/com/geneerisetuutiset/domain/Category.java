@@ -5,6 +5,7 @@
  */
 package com.geneerisetuutiset.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,4 +26,13 @@ public class Category extends AbstractPersistable<Long> {
     @Id
     private Long id;
     private String name;
+    
+    public void addArticle(Article article) {
+        if (articles == null) {
+            articles = new ArrayList<>();
+        }
+        if (!articles.contains(article)) {
+            articles.add(article);
+        }
+    }
 }

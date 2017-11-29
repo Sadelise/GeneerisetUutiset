@@ -5,6 +5,7 @@
  */
 package com.geneerisetuutiset.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,9 +20,19 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @Entity
 public class Author extends AbstractPersistable<Long> {
+
     @ManyToMany
     private List<Article> articles;
     @Id
     private Long id;
     private String name;
+
+    public void addArticle(Article article) {
+        if (articles == null) {
+            articles = new ArrayList<>();
+        }
+        if (!articles.contains(article)) {
+            articles.add(article);
+        }
+    }
 }
