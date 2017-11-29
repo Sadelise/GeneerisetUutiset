@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div th:fragment="filtered_published">
+            <table>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tr th:each="article : ${published}">
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.published}">published</a></td>
+                </tr>
+            </table>
+        </div>
+        
+          <div th:fragment="filtered_timesRead">
+            <table>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tr th:each="article : ${timesRead}">
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.published}">published</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

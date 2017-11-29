@@ -2,12 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Geneeriset Uutiset</title>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
     </head>
 
     <body>
-        <h1 th:text="${article.title}">article</h1>
+        <div th:replace="fragments/navbar :: navbar">...</div>
+
+        <div style="width:800px; margin:0 auto;">
+            <h1 th:text="${article.title}">article</h1>
+            <p th:text="${article.ingress}"><b></b></p>
+            <div th:if="${article != null}">
+                <img th:src="@{/pictures/{id}(id=${article.id})}"/>
+            </div>
+            <p th:text="${article.content}"></p>
+            <p th:text="${article.published}"></p>
 
 
-        <a th:href="@{/}">Takaisin etusivulle</a>
+            Kirjoittanut: 
+            <ul th:each="author : ${authors}">
+                <li th:inline="text" th:text="${author.name}">name</li>
+            </ul> 
+            <br></br>
+            <h3>Viimeisimmät:</h3>
+            <div th:replace="fragments/filtered :: filtered_published">...</div>
+            <br></br>
+            <h3>Suosituimmat:</h3>
+            <div th:replace="fragments/filtered :: filtered_timesRead">...</div>
+        </div>
+        <script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>

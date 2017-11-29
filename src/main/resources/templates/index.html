@@ -2,35 +2,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Geneeriset Uutiset</title>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
     </head>
 
     <body>
-        <ul>
-            <li th:each="category : ${categories}">
-                <ul>
-                    <li><a th:href="@{/news/category/{category}(category=${category.id})}" th:text="${category.name}">category</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div th:replace="fragments/navbar :: navbar">...</div>
+        <div style="width:800px; margin:0 auto;">
+            <h1>Geneeriset Uutiset</h1>
+            <ul>
+                <li><a th:inline="text" href="/news/filtered/published">Uusimmat</a></li>
+                <li><a th:inline="text" href="/news/filtered/timesRead">Suosituimmat</a></li>
+            </ul>
+            <table>
+                <tr>
+                    <th>Otsikot</th>
+                    <th></th>
+                </tr>
 
-        <h1>Geneeriset Uutiset</h1>
+                <tr th:each="article : ${news}">
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
+                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.ingress}">ingressi</a></td>
+                    <td>
+                        <div th:if="${article != null}">
+                            <a th:href="@{/news/{article}(article=${article.id})}">
+                                <img th:src="@{/pictures/{id}(id=${article.id})}"/>
+                            </a>
+                        </div>
+                    </td>
+                    <!--                <div th:if="${article.picture != null}">
+                                        <img th:src="@{/picture/{id}(id=${article.picture})}"/>
+                                    </div>-->
 
-        <table>
-            <tr>
-                <th>Otsikot</th>
-                <th></th>
-            </tr>
-
-            <tr th:each="article : ${news}">
-                <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-                <!--                <div th:if="${article.picture != null}">
-                                    <img th:src="@{/picture/{id}(id=${article.picture})}"/>
-                                </div>-->
-                <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
-            </tr>
-        </table>
+                </tr>
+            </table>
 
 
-        <a th:href="@{/control}">Hallintapaneeliin</a>
+            <a th:href="@{/control}">Hallintapaneeliin</a>
+        </div>
+        <script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>

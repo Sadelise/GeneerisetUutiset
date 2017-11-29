@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse" th:fragment="navbar">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}">Geneeriset Uutiset</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:inline="text" href="/news/category/Uudet">Uudet</a></li>
+                        <li><a th:inline="text" href="/news/category/Vanhat">Vanhat</a></li>
+                        <li><a th:inline="text" href="/news/category/Hyvät">Hyvät</a></li>
+                        <li><a th:inline="text" href="/news/category/Huonot">Huonot</a></li>
+                        <li><a th:inline="text" href="/news/category/Jännät">Jännät</a></li>
+                        <li><a th:inline="text" href="/news/category/Tylsät">Tylsät</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

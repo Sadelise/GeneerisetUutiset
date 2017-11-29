@@ -2,43 +2,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Geneeriset Uutiset</title>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
     </head>
 
     <body>
-        <ul>
-            <li th:each="category : ${categories}">
-                <ul>
-                    <li><a th:href="@{/news/category/{category}(category=${category.id})}" th:text="${category.name}">category</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div th:replace="fragments/navbar :: navbar">...</div>
 
-        <h1>Hallintapaneeli</h1>
+        <div style="width:800px; margin:0 auto;">
 
-        <table>
-            <tr>
-                <th>Klikkaa otsikkoa editoidaksesi</th>
-                <th></th>
-            </tr>
+            <table>
+                <tr>
+                    <th>Klikkaa otsikkoa editoidaksesi</th>
+                    <th></th>
+                </tr>
 
-            <tr th:each="article : ${news}">
-                <td><a th:href="@{/edit/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-                <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
-            </tr>
-        </table>
+                <tr th:each="article : ${news}">
+                    <td><a th:href="@{/edit/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
+                    <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
+                </tr>
+            </table>
+
+            <div>
+                <font color="red">
+                    <span th:text="${message}"></span>
+                </font>    
+            </div>
+
+            <h2>Lisää uutinen:</h2>
+
+            <form action="/news/new" method="POST" enctype="multipart/form-data">
+                <br></br>
+                Otsikko:<input type="text" name="title"/>
+                <br></br>
+                Kirjoittaja (lisää useampia pilkulla eroteltuna):<input type="text" name="authorNames"/>
+                <br></br>
+                Ingressi:<input type="text" name="ingress"/>
+                <br></br>
+                Sisältö:
+                <textarea name="content" rows="10" cols="30">
 
 
-        <h2>Lisää uutinen:</h2>
 
-        <form action="/news/new" method="POST">
-            <span>Otsikko</span>
-            Otsikko:<input type="text" name="title"/>
-            Kirjoittaja (lisää useampia pilkulla eroteltuna):<input type="text" name="author"/>
-            Ingressi:<input type="text" name="ingressi"/>
-            Sisältö:<input type="text" name="content"/>
-            Kategoria (lisää useampia pilkulla eroteltuna):<input type="text" name="category"/>
-            Lisää kuva: <input type="text" name="title"/>
-            <input type="submit" value="Julkaise"/>
-        </form>
+
+
+
+
+                </textarea>
+                <br></br>
+                Kategoria:
+                <select name="categoryNames" size="6" multiple>
+                    <option value="Uudet">Uudet</option>
+                    <option value="Vanhat">Vanhat</option>
+                    <option value="Hyvät">Hyvät</option>
+                    <option value="Huonot">Huonot</option>
+                    <option value="Jännät">Jännät</option>
+                    <option value="Tylsät">Tylsät</option>
+                </select>
+                <br></br>
+                Lisää kuva:    <input type="file" name="picture"/>
+                <br></br>
+                <input type="submit" value="Julkaise"/>
+            </form>
+            <script type="text/javascript"
+            src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </div>
     </body>
 </html>
