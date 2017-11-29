@@ -52,4 +52,17 @@ public class Article extends AbstractPersistable<Long> {
             categories.add(category);
         }
     }
+
+    public Object getAuthorsAsString() {
+        String names = "";
+        if (this.authors != null) {
+            for (Author author : authors) {
+                if (names.length() > 0) {
+                    names += ", ";
+                }
+                names += author.getName();
+            }
+        }
+        return names;
+    }
 }

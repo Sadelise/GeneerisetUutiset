@@ -6,7 +6,6 @@
 package com.geneerisetuutiset.controllers;
 
 import com.geneerisetuutiset.domain.Article;
-import com.geneerisetuutiset.domain.Author;
 import com.geneerisetuutiset.domain.Category;
 import com.geneerisetuutiset.repositories.ArticleRepository;
 import com.geneerisetuutiset.repositories.AuthorRepository;
@@ -64,10 +63,7 @@ public class NewsController {
 
     @DeleteMapping("/news/{id}")
     public String deleteArticle(Model model, @PathVariable Long id) {
-        Article article = articleRepository.getOne(id);
-        if (article != null) {
-            articleRepository.delete(article);
-        }
+        newsEditingService.deleteArticle(id);
         return "redirect:/";
     }
 
@@ -86,7 +82,7 @@ public class NewsController {
     @GetMapping("/control")
     public String controlPanel(Model model) {
         model.addAttribute("news", this.articleRepository.findAll());
-        model.addAttribute("categories", this.categoryRepository.findAll());
+//        model.addAttribute("categories", this.categoryRepository.findAll());
         return "control";
     }
 
@@ -100,6 +96,7 @@ public class NewsController {
     public String getArticlesByCategory(Model model, @PathVariable String name) {
         Category category = categoryRepository.getOneByName(name);
         model.addAttribute("news", category.getArticles());
+        model.addAttribute("filteringTitle", name);
         return "filtered";
     }
 
@@ -107,6 +104,7 @@ public class NewsController {
     public String getArticlesByPublishingTime(Model model) {
         Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.Direction.DESC, "published");
         model.addAttribute("published", articleRepository.findAll(pageable));
+        model.addAttribute("filteringTitle", "Uusimmat");
         return "filtered";
     }
 
@@ -114,6 +112,32 @@ public class NewsController {
     public String getArticlesByPopularity(Model model) {
         Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.Direction.DESC, "timesRead");
         model.addAttribute("timesRead", articleRepository.findAll(pageable));
+        model.addAttribute("filteringTitle", "Suosituimmat");
         return "filtered";
     }
+
+    @GetMapping("/edit/{id}")
+    public String chooseToEditArticle(Model model, @PathVariable Long id) {
+        Article article = articleRepository.getOne(id);
+        model.addAttribute("article", article);
+        model.addAttribute("authors", article.getAuthorsAsString());
+        model.addAttribute("news", this.articleRepository.findAll());
+
+        return "edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editArticle(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes,
+            String title, String ingress, String authorNames, String content, String[] categoryNames,
+            @Param("file") MultipartFile picture) throws IOException {
+        Article article = articleRepository.getOne(id);
+        if (title == null || authorNames == null || content == null || article == null) {
+            redirectAttributes.addFlashAttribute("message", "Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.");
+            return "redirect:/edit/" + id;
+        }
+        newsEditingService.editArticle(article, title, ingress, authorNames, content, categoryNames, picture);
+        redirectAttributes.addFlashAttribute("message", "Editointi onnistui!");
+        return "redirect:/control";
+    }
+
 }

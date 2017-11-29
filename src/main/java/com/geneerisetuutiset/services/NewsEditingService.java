@@ -26,22 +26,10 @@ public class NewsEditingService {
 
     public void addNew(String title, String ingress, String authorNames, String content, String[] categoryNames, MultipartFile picture) throws IOException {
         Article article = new Article();
-
-        if (picture != null) { // && picture.getContentType().equals("image/jpeg")) {
-            article.setPicture(picture.getBytes());
-        }
-        articleRepository.save(article);
-
-        addAuthorsToArticle(article, authorNames);
-        addCategoriesToArticle(article, categoryNames);
-        article.setContent(content);
-        article.setIngress(ingress);
-        article.setPublished(LocalDateTime.now());
-        article.setTitle(title);
-        articleRepository.save(article);
+        editArticle(article, title, ingress, authorNames, content, categoryNames, picture);
     }
 
-    private void addAuthorsToArticle(Article article, String authorNames) {
+    public void addAuthorsToArticle(Article article, String authorNames) {
         if (authorNames != null) {
             String replaceNames = authorNames.replace(" ", "");
             String[] names = replaceNames.split(",");
@@ -60,23 +48,45 @@ public class NewsEditingService {
 
     }
 
-    private void addCategoriesToArticle(Article article, String[] categoryNames) {
+    public void addCategoriesToArticle(Article article, String[] categoryNames) {
         if (categoryNames != null) {
             for (String name : categoryNames) {
                 Category category = categoryRepository.findByName(name);
-                if (category == null && name != null && !name.isEmpty()) {
-                    System.out.println("CATEGORIA OLI NULL " + category);
-                    category = new Category();
-                    category.setName(name);
-                    categoryRepository.save(category);
-                }
-                if (category != null) {
-                    System.out.println("CATEGORIA OLI " + category);
+                if (category != null && name != null && !name.isEmpty()) {
                     category.addArticle(article);
                     article.addCategory(category);
+                    categoryRepository.save(category);
                 }
             }
         }
         articleRepository.save(article);
+    }
+
+    public void editArticle(Article article, String title, String ingress, String authorNames, String content, String[] categoryNames, MultipartFile picture) throws IOException {
+        if (picture != null) { // && picture.getContentType().equals("image/jpeg")) {
+            article.setPicture(picture.getBytes());
+        }
+        addAuthorsToArticle(article, authorNames);
+        addCategoriesToArticle(article, categoryNames);
+        article.setContent(content);
+        article.setIngress(ingress);
+        article.setPublished(LocalDateTime.now());
+        article.setTitle(title);
+        articleRepository.save(article);
+    }
+
+    public void deleteArticle(Long id) {
+        Article article = articleRepository.getOne(id);
+        if (article != null) {
+            for (Author author : article.getAuthors()) {
+                author.getArticles().remove(article);
+                authorRepository.save(author);
+            }
+            for (Category category : article.getCategories()) {
+                category.getArticles().remove(article);
+                categoryRepository.save(category);
+            }
+            articleRepository.delete(article);
+        }
     }
 }
