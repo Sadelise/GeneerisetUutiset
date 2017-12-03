@@ -1,8 +1,12 @@
 package com.geneerisetuutiset.domain;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -22,19 +26,48 @@ public class Article extends AbstractPersistable<Long> {
     private String title;
     private String ingress;
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
     private String content;
-    private LocalDate published;
-    @ManyToMany(mappedBy = "pieceOfNewss")
+    private LocalDateTime published;
+    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Author> authors;
-    @ManyToMany(mappedBy = "pieceOfNewss")
+    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Category> categories;
+    private int timesRead;
 
     public void addAuthor(Author author) {
-        authors.add(author);
+        if (authors == null) {
+            authors = new ArrayList<>();
+        }
+        if (!authors.contains(author)) {
+            authors.add(author);
+        }
     }
 
     public void addCategory(Category category) {
-        categories.add(category);
+        if (categories == null) {
+            categories = new ArrayList<>();
+        }
+        if (!categories.contains(category)) {
+            categories.add(category);
+        }
+    }
+
+    public Object getAuthorsAsString() {
+        String names = "";
+        if (this.authors != null) {
+            for (Author author : authors) {
+                if (names.length() > 0) {
+                    names += ", ";
+                }
+                names += author.getName();
+            }
+        }
+        return names;
     }
 }

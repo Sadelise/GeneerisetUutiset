@@ -5,8 +5,12 @@
  */
 package com.geneerisetuutiset.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
@@ -19,9 +23,21 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @Entity
 public class Author extends AbstractPersistable<Long> {
+
+    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
     @ManyToMany
-    private List<Article> pieceOfNewss;
+    private List<Article> articles;
     @Id
     private Long id;
     private String name;
+
+    public void addArticle(Article article) {
+        if (articles == null) {
+            articles = new ArrayList<>();
+        }
+        if (!articles.contains(article)) {
+            articles.add(article);
+        }
+    }
 }

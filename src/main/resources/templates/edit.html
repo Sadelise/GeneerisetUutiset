@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Geneeriset Uutiset</title>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
+    </head>
+
+    <body>
+        <div th:replace="fragments/navbar :: navbar">...</div>
+
+        <div style="width:800px; margin:0 auto;">
+
+            <table>
+                <tr>
+                    <th>Klikkaa otsikkoa editoidaksesi</th>
+                    <th></th>
+                </tr>
+
+                <tr th:each="newsArticle : ${news}">
+                    <td><a th:href="@{/edit/{newsArticle}(newsArticle=${newsArticle.id})}" th:text="${newsArticle.title}">otsikko</a></td>
+                    <td><form th:action="@{/news/{newsArticle}(newsArticle=${newsArticle.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
+                </tr>
+            </table>
+
+            <div>
+                <font color="red">
+                    <span th:text="${message}"></span>
+                </font>    
+            </div>
+
+            <h2>Muokkaa uutista: <span th:text="${article.title}"></span></h2>
+
+            <form th:action="@{/edit/{id}(id=${article.id})}"  method="POST" enctype="multipart/form-data">
+                <br></br>
+                Otsikko:<input type="text" name="title" th:value="${article.title}"/>
+                <br></br>
+                Kirjoittaja (lisää useampia pilkulla eroteltuna):
+                <input type="text" name="authorNames"th:value="${authors}"/>
+                <br></br>
+                Ingressi:<input type="text" name="ingress"th:value="${article.ingress}"/>
+                <br></br>
+                Sisältö:
+                <textarea name="content" rows="10" cols="30"th:value="${article.content}" th:field="${article.content}">
+
+
+
+
+
+
+
+                </textarea>
+                <br></br>
+                Kategoria:
+                <select name="categoryNames" size="6" multiple>
+                    <option th:each="category : ${article.categories}" 
+                            th:selected="true"
+                            th:value="${category.name}"
+                            th:text="${category.name}">Category name</option>
+                    <option value="Uudet">Uudet</option>
+                    <option value="Vanhat">Vanhat</option>
+                    <option value="Hyvät">Hyvät</option>
+                    <option value="Huonot">Huonot</option>
+                    <option value="Jännät">Jännät</option>
+                    <option value="Tylsät">Tylsät</option>
+                </select>
+                <br></br>
+                Lisää kuva:    <input type="file" name="picture"/>
+                <div th:if="${article != null}">
+                    Nykyinen kuva:
+                    <img th:src="@{/pictures/{id}(id=${article.id})}"/>
+                </div>
+                <br></br>
+                <input type="submit" value="Muokkaa"/>
+            </form>
+        </div>
+        <script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    </body>
+</html>

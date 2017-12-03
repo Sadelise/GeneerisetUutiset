@@ -2,30 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Geneeriset Uutiset</title>
+
+        <link rel="stylesheet" type="text/css"
+              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css" />
     </head>
 
     <body>
-        <h1>Geneeriset Uutiset</h1>
+        <div th:replace="fragments/navbar :: navbar">...</div>
+        <div style="width:800px; margin:0 auto;">
+            <h1>Geneeriset Uutiset</h1>
+            <ul>
+                <li><a th:inline="text" href="/news/filtered//published/Uusimmat">Uusimmat</a></li>
+                <li><a th:inline="text" href="/news/filtered/timesRead/Suosituimmat">Suosituimmat</a></li>
+            </ul>
 
-        <table>
-            <tr>
-                <th>Otsikot</th>
-                <th></th>
-            </tr>
+            <h2>Uutisotsikot</h2>
 
-            <tr th:each="article : ${news}">
-                <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-                <td><form th:action="@{/news/{article}(article=${article.id})}" th:method="DELETE"><input type="submit" value="Delete"/></form></td>
-            </tr>
-        </table>
-
-
-        <h2>Lisää uutinen:</h2>
-
-        <form action="/news/new" method="POST">
-            <span>Otsikko</span>
-            <input type="text" name="title"/>
-            <input type="submit" value="Add!"/>
-        </form>
+            <ul th:each="article : ${news}">
+                ____________________________________________________
+                <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></li>
+                <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.ingress}">ingressi</a></li>
+                <li>
+                    <div th:if="${article != null}">
+                        <a th:href="@{/news/{article}(article=${article.id})}">
+                            <img th:src="@{/pictures/{id}(id=${article.id})}"/>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <script type="text/javascript"
+        src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
 </html>
