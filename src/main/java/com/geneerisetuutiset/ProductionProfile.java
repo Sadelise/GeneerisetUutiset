@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 @Profile("production")
-@ComponentScan(basePackages = "com.geneerisetuutiset")
+//@ComponentScan(basePackages = "com.geneerisetuutiset")
 public class ProductionProfile {
 
     @Bean
