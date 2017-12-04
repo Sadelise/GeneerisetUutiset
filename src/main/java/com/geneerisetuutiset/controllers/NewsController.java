@@ -93,7 +93,7 @@ public class NewsController {
 
     @GetMapping("/news/category/{name}")
     public String getArticlesByCategory(Model model, @PathVariable String name) {
-        Category category = categoryRepository.getOneByName(name);
+        Category category = categoryRepository.findByName(name);
         model.addAttribute("news", category.getArticles());
         model.addAttribute("filteringTitle", name);
         return "filtered";

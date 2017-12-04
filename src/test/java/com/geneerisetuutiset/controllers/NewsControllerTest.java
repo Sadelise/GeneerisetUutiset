@@ -131,14 +131,15 @@ public class NewsControllerTest {
 //    @Test
 //    @Transactional
 //    public void articleIsDeleted() throws Exception {
-//        addNewArticle("Poistettava", testContent);
-//        System.out.println("Tässä ollaan");
-//        Article article = articleRepository.findByTitle("Poistettava");
-//        System.out.println("ARTICLE " + article);
-//        mockMvc.perform(delete("/news/" + article.getId()))
+////        addNewArticle("Poistettava", testContent);
+////        System.out.println("Tässä ollaan");
+////        Article article = articleRepository.findByTitle("Poistettava");
+//        System.out.println("ARTICLE " + testArticle.getId());
+//        mockMvc.perform(delete("/news/" + testArticle.getId()))
 //                .andExpect(status().is3xxRedirection());
-//        assertEquals(null, article);
-////        assertNull(article);
+////        assertEquals(null, article);
+//        assertNull(testArticle);
+//        addNewArticle(testTitle, testContent);
 //    }
 
     @Test
