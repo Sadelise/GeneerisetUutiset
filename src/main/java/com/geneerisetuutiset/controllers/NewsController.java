@@ -62,21 +62,21 @@ public class NewsController {
         return "redirect:/";
     }
 
-//    @PostMapping("/news/new")
-//    public String postArticle(Model model,
-//            String title, String ingress, String authorNames, String content, String[] categoryNames,
-//            @Param("file") MultipartFile picture, RedirectAttributes redirectAttributes) throws IOException {
-//        if (title == null || authorNames == null || content == null) {
-//            redirectAttributes.addFlashAttribute("message", "Artikkelin lisäys epäonnistui. Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.");
-//            return "redirect:/control";
-//        }
-//        if (articleRepository.findByTitle(title) != null) {
-//            redirectAttributes.addFlashAttribute("message", "Artikkelin lisäys epäonnistui. Artikkeli samalla otsikolla on jo olemassa!");
-//            return "redirect:/control";
-//        }
-//        newsEditingService.addNew(title, ingress, authorNames, content, categoryNames, picture);
-//        return "redirect:/";
-//    }
+    @PostMapping("/news/new")
+    public String postArticle(Model model,
+            String title, String ingress, String authorNames, String content, String[] categoryNames,
+            @Param("file") MultipartFile picture, RedirectAttributes redirectAttributes) throws IOException {
+        if (title == null || authorNames == null || content == null) {
+            redirectAttributes.addFlashAttribute("message", "Artikkelin lisäys epäonnistui. Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.");
+            return "redirect:/control";
+        }
+        if (articleRepository.findByTitle(title) != null) {
+            redirectAttributes.addFlashAttribute("message", "Artikkelin lisäys epäonnistui. Artikkeli samalla otsikolla on jo olemassa!");
+            return "redirect:/control";
+        }
+        newsEditingService.addNew(title, ingress, authorNames, content, categoryNames, picture);
+        return "redirect:/";
+    }
 
     @GetMapping("/control")
     public String controlPanel(Model model) {
@@ -91,13 +91,13 @@ public class NewsController {
         return articleRepository.getOne(id).getPicture();
     }
 
-//    @GetMapping("/news/category/{name}")
-//    public String getArticlesByCategory(Model model, @PathVariable String name) {
-//        Category category = categoryRepository.findByName(name);
-//        model.addAttribute("news", category.getArticles());
-//        model.addAttribute("filteringTitle", name);
-//        return "filtered";
-//    }
+    @GetMapping("/news/category/{name}")
+    public String getArticlesByCategory(Model model, @PathVariable String name) {
+        Category category = categoryRepository.findByName(name);
+        model.addAttribute("news", category.getArticles());
+        model.addAttribute("filteringTitle", name);
+        return "filtered";
+    }
 
     @GetMapping("/news/filtered/{filterBy}/{title}")
     public String getArticlesByPublishingTime(Model model, @PathVariable String filterBy, @PathVariable String title) {
