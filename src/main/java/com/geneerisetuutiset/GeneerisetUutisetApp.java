@@ -39,25 +39,25 @@ public class GeneerisetUutisetApp {
         }
     }
 
-    @PostConstruct
-    public void categories() {
-        Category category1 = new Category();
-        Category category2 = new Category();
-        Category category3 = new Category();
-        Category category4 = new Category();
-        Category category5 = new Category();
-        Category category6 = new Category();
-        category1.setName("Vanhat");
-        category2.setName("Uudet");
-        category3.setName("Hyvät");
-        category4.setName("Huonot");
-        category5.setName("Jännät");
-        category6.setName("Tylsät");
-        categoryRepository.save(category1);
-        categoryRepository.save(category2);
-        categoryRepository.save(category3);
-        categoryRepository.save(category4);
-        categoryRepository.save(category5);
-        categoryRepository.save(category6);
-    }
+//    @PostConstruct
+//    public void categories() {
+//        Category category1 = new Category();
+//        Category category2 = new Category();
+//        Category category3 = new Category();
+//        Category category4 = new Category();
+//        Category category5 = new Category();
+//        Category category6 = new Category();
+//        category1.setName("Vanhat");
+//        category2.setName("Uudet");
+//        category3.setName("Hyvät");
+//        category4.setName("Huonot");
+//        category5.setName("Jännät");
+//        category6.setName("Tylsät");
+//        categoryRepository.save(category1);
+//        categoryRepository.save(category2);
+//        categoryRepository.save(category3);
+//        categoryRepository.save(category4);
+//        categoryRepository.save(category5);
+//        categoryRepository.save(category6);
+//    }
 }

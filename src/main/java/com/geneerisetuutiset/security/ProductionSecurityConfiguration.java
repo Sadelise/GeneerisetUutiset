@@ -23,9 +23,9 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
 
     @Autowired
     private UserDetailsService userDetailsService;
-    @Value("admin.password")
+    @Value("${ADMINPASSWORD}")
     private String adminPassword;
-    @Value("user.password")
+    @Value("${USERPASSWORD}")
     private String userPassword;
 
     @Override
