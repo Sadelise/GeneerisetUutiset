@@ -30,7 +30,6 @@ public class Article extends AbstractPersistable<Long> {
     @Size(min = 10, max = 100)
     private String ingress;
     @Lob
-    @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
     @Size(min = 10, max = 1000)
     private String content;
