@@ -19,13 +19,10 @@ public class Account extends AbstractPersistable<Long> {
 
     @Id
     private Long id;
-    @NotEmpty
     @Size(min = 3, max = 12)
     private String username;
-    @NotEmpty
     @Size(min = 8)
     private String password;
-    @NotEmpty
     @OneToMany
     private List<Role> roles;
 }

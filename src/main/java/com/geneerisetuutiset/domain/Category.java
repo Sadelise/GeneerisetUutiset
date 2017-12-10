@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -27,12 +28,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Category extends AbstractPersistable<Long> {
 
     @JsonIgnore
-    @Basic(fetch = FetchType.LAZY)
-    @ManyToMany
+    @Basic
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Article> articles;
     @Id
     private Long id;
-    @NotEmpty
     @Size(min = 3, max = 20)
     private String name;
 

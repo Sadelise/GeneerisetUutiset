@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,7 +15,6 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @NoArgsConstructor
@@ -37,13 +37,13 @@ public class Article extends AbstractPersistable<Long> {
     private LocalDateTime published;
     @Size(min = 1, max = 10)
     @JsonIgnore
-    @Basic(fetch = FetchType.LAZY)
-    @ManyToMany
+    @Basic
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Author> authors;
     @Size(min = 1, max = 10)
     @JsonIgnore
-    @Basic(fetch = FetchType.LAZY)
-    @ManyToMany
+    @Basic
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Category> categories;
     private int timesRead;
 

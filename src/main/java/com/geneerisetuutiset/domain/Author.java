@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -28,11 +29,10 @@ public class Author extends AbstractPersistable<Long> {
 
     @JsonIgnore
     @Basic(fetch = FetchType.LAZY)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Article> articles;
     @Id
     private Long id;
-    @NotEmpty
     @Size(min = 5, max = 50)
     private String name;
 

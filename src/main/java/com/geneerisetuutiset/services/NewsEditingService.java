@@ -63,7 +63,7 @@ public class NewsEditingService {
     }
 
     public void editArticle(Article article, String title, String ingress, String authorNames, String content, String[] categoryNames, MultipartFile picture) throws IOException {
-        if (picture != null) {
+        if (picture != null && !picture.isEmpty()) {
             article.setPicture(picture.getBytes());
         }
         addAuthorsToArticle(article, authorNames);
