@@ -37,6 +37,7 @@ public class NewsController {
     @Autowired
     private NewsEditingService newsEditingService;
 
+    @Transactional
     @RequestMapping("/")
     public String home(Model model) {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "published");
@@ -45,6 +46,7 @@ public class NewsController {
         return "index";
     }
 
+    @Transactional
     @GetMapping("/news/{id}")
     public String getArticle(Model model, @PathVariable Long id) {
         Article article = articleRepository.getOne(id);
@@ -83,6 +85,7 @@ public class NewsController {
         return "redirect:/";
     }
 
+    @Transactional
     @GetMapping("/control")
     public String controlPanel(Model model) {
         model.addAttribute("news", this.articleRepository.findAll());
@@ -90,12 +93,14 @@ public class NewsController {
         return "control";
     }
 
+    @Transactional
     @GetMapping(path = "/pictures/{id}", produces = "image/gif")
     @ResponseBody
     public byte[] get(@PathVariable Long id) {
         return articleRepository.getOne(id).getPicture();
     }
 
+    @Transactional
     @GetMapping("/news/category/{name}")
     public String getArticlesByCategory(Model model, @PathVariable String name) {
         Category category = categoryRepository.findByName(name);
@@ -104,6 +109,7 @@ public class NewsController {
         return "filtered";
     }
 
+    @Transactional
     @GetMapping("/news/filtered/{filterBy}/{title}")
     public String getArticlesByPublishingTime(Model model, @PathVariable String filterBy, @PathVariable String title) {
         Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.Direction.DESC, filterBy);
@@ -112,6 +118,7 @@ public class NewsController {
         return "filtered";
     }
 
+    @Transactional
     @GetMapping("/edit/{id}")
     public String chooseToEditArticle(Model model, @PathVariable Long id) {
         Article article = articleRepository.getOne(id);

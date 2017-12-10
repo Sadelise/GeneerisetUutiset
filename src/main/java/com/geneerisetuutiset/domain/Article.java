@@ -29,8 +29,7 @@ public class Article extends AbstractPersistable<Long> {
     private String title;
     @Size(min = 10, max = 100)
     private String ingress;
-    @Type(type = "org.hibernate.type.PrimitiveByteArrayBlobType")
-//    @Lob
+    @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
     @Size(min = 10, max = 1000)
