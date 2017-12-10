@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.springframework.org/security/tags">
+
     <head>
         <title>Geneeriset Uutiset</title>
-
-        <link rel="stylesheet" type="text/css"
-              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/css/main.css}"
-              href="../../css/main.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <link href="css/style.css" rel="stylesheet"/>
     </head>
 
     <body>
         <div th:replace="fragments/navbar :: navbar">...</div>
         <div style="width:800px; margin:0 auto;">
+           <div align="centered">
             <h1>Geneeriset Uutiset</h1>
-            <ul>
-                <li><a th:inline="text" href="/news/filtered//published/Uusimmat">Uusimmat</a></li>
-                <li><a th:inline="text" href="/news/filtered/timesRead/Suosituimmat">Suosituimmat</a></li>
-            </ul>
+            <hr></hr>
 
+            <b><a th:inline="text" href="/news/filtered/published/Uusimmat">Uusimmat</a></b><br></br>
+            <b><a th:inline="text" href="/news/filtered/timesRead/Suosituimmat">Suosituimmat</a></b>
+
+            <hr></hr>
             <h2>Uutisotsikot</h2>
-
             <ul th:each="article : ${news}">
-                ____________________________________________________
-                <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></li>
+                <li><h3><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></h3></li>
                 <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.ingress}">ingressi</a></li>
                 <li>
                     <div th:if="${article != null}">

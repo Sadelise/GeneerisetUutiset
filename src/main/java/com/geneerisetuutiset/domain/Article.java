@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,17 +24,22 @@ public class Article extends AbstractPersistable<Long> {
 
     @Id
     private Long id;
+    @Size(min = 5, max = 50)
     private String title;
+    @Size(min = 10, max = 100)
     private String ingress;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
+    @Size(min = 10, max = 1000)
     private String content;
     private LocalDateTime published;
+    @Size(min = 1, max = 10)
     @JsonIgnore
     @Basic(fetch = FetchType.LAZY)
     @ManyToMany
     private List<Author> authors;
+    @Size(min = 1, max = 10)
     @JsonIgnore
     @Basic(fetch = FetchType.LAZY)
     @ManyToMany

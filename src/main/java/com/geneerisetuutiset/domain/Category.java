@@ -13,9 +13,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @NoArgsConstructor
@@ -30,6 +32,8 @@ public class Category extends AbstractPersistable<Long> {
     private List<Article> articles;
     @Id
     private Long id;
+    @NotEmpty
+    @Size(min = 3, max = 20)
     private String name;
 
     public void addArticle(Article article) {
