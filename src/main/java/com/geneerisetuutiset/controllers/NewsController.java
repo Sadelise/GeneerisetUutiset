@@ -59,7 +59,6 @@ public class NewsController {
     }
 
     @Transactional
-    @Secured("ADMIN")
     @DeleteMapping("/news/{id}")
     public String deleteArticle(Model model, @PathVariable Long id) {
         newsEditingService.deleteArticle(id);
@@ -67,7 +66,6 @@ public class NewsController {
     }
 
     @Transactional
-    @Secured("ADMIN")
     @PostMapping("/news/new")
     public String postArticle(Model model,
             String title, String ingress, String authorNames, String content, String[] categoryNames,
@@ -85,7 +83,6 @@ public class NewsController {
         return "redirect:/";
     }
 
-    @Secured("ADMIN")
     @GetMapping("/control")
     public String controlPanel(Model model) {
         model.addAttribute("news", this.articleRepository.findAll());
@@ -115,7 +112,6 @@ public class NewsController {
         return "filtered";
     }
 
-    @Secured("ADMIN")
     @GetMapping("/edit/{id}")
     public String chooseToEditArticle(Model model, @PathVariable Long id) {
         Article article = articleRepository.getOne(id);
@@ -126,7 +122,6 @@ public class NewsController {
     }
 
     @Transactional
-    @Secured("ADMIN")
     @PostMapping("/edit/{id}")
     public String editArticle(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes,
             String title, String ingress, String authorNames, String content, String[] categoryNames,

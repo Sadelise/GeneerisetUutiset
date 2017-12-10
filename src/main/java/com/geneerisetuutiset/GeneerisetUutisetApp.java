@@ -5,14 +5,8 @@
  */
 package com.geneerisetuutiset;
 
-import com.geneerisetuutiset.domain.Account;
 import com.geneerisetuutiset.domain.Category;
-import com.geneerisetuutiset.domain.Role;
-import com.geneerisetuutiset.repositories.AccountRepository;
 import com.geneerisetuutiset.repositories.CategoryRepository;
-import com.geneerisetuutiset.repositories.RoleRepository;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +23,6 @@ public class GeneerisetUutisetApp {
 
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private RoleRepository roleRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(GeneerisetUutisetApp.class, args);
@@ -51,27 +41,6 @@ public class GeneerisetUutisetApp {
 
     @PostConstruct
     public void categories() {
-        Role role = new Role();
-        role.setRole("ADMIN");
-        roleRepository.save(role);
-        Role role2 = new Role();
-        role2.setRole("USER");
-        roleRepository.save(role2);
-        Account account = new Account();
-        account.setUsername("will");
-        account.setPassword("adminadmin");
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-        account.setRoles(roles);
-        accountRepository.save(account);
-        Account account2 = new Account();
-        account2.setUsername("jack");
-        account2.setPassword("useruser");
-        List<Role> roles2 = new ArrayList<>();
-        roles2.add(role2);
-        account2.setRoles(roles2);
-        accountRepository.save(account2);
-
         if (categoryRepository.findByName("Vanhat") == null) {
             Category category1 = new Category();
             category1.setName("Vanhat");
