@@ -42,7 +42,6 @@ public class NewsController {
     public String home(Model model) {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "published");
         model.addAttribute("news", this.articleRepository.findAll(pageable));
-//        model.addAttribute("categories", this.categoryRepository.findAll());
         return "index";
     }
 
@@ -100,7 +99,6 @@ public class NewsController {
         return articleRepository.getOne(id).getPicture();
     }
 
-    @Transactional
     @GetMapping("/news/category/{name}")
     public String getArticlesByCategory(Model model, @PathVariable String name) {
         Category category = categoryRepository.findByName(name);
