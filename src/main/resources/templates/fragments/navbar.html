@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.springframework.org/security/tags">
     <head>
 
-        <link rel="stylesheet" type="text/css"
-              th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/css/main.css}"
-              href="../../css/main.css" />
     </head>
     <body>
         <nav class="navbar navbar-inverse" th:fragment="navbar">
@@ -21,7 +19,12 @@
                         <li><a th:inline="text" href="/news/category/Huonot">Huonot</a></li>
                         <li><a th:inline="text" href="/news/category/Jännät">Jännät</a></li>
                         <li><a th:inline="text" href="/news/category/Tylsät">Tylsät</a></li>
-                        <li><a th:align="right" th:href="@{/control}">Hallintapaneeli</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li th:align="right" sec:authorize="hasRole('ADMIN')"><a th:href="@{/control}">Hallintapaneeli</a></li>
+                        <li th:align="right" sec:authorize="isAnonymous()"><a th:action="GET" th:inline="text" href="/login">Login</a></li>
+                        <li th:align="right" sec:authorize="isAuthenticated()"><a th:action="POST" th:inline="text" href="/logout">Logout</a></li>
+
                     </ul>
                 </div>
             </div>

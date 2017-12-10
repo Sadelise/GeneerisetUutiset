@@ -7,11 +7,13 @@ import com.geneerisetuutiset.repositories.AuthorRepository;
 import com.geneerisetuutiset.repositories.CategoryRepository;
 import com.geneerisetuutiset.services.NewsEditingService;
 import java.io.IOException;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +37,7 @@ public class NewsController {
     @Autowired
     private NewsEditingService newsEditingService;
 
-    @RequestMapping("*")
+    @RequestMapping("/")
     public String home(Model model) {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "published");
         model.addAttribute("news", this.articleRepository.findAll(pageable));
@@ -56,17 +58,22 @@ public class NewsController {
         return "article";
     }
 
+    @Transactional
+    @Secured("ADMIN")
     @DeleteMapping("/news/{id}")
     public String deleteArticle(Model model, @PathVariable Long id) {
         newsEditingService.deleteArticle(id);
         return "redirect:/";
     }
 
+    @Transactional
+    @Secured("ADMIN")
     @PostMapping("/news/new")
     public String postArticle(Model model,
             String title, String ingress, String authorNames, String content, String[] categoryNames,
             @Param("file") MultipartFile picture, RedirectAttributes redirectAttributes) throws IOException {
-        if (title == null || authorNames == null || content == null) {
+        if (title == null || authorNames == null || content == null
+                || title.isEmpty() || authorNames.isEmpty() || content.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Artikkelin lisäys epäonnistui. Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.");
             return "redirect:/control";
         }
@@ -78,6 +85,7 @@ public class NewsController {
         return "redirect:/";
     }
 
+    @Secured("ADMIN")
     @GetMapping("/control")
     public String controlPanel(Model model) {
         model.addAttribute("news", this.articleRepository.findAll());
@@ -107,6 +115,7 @@ public class NewsController {
         return "filtered";
     }
 
+    @Secured("ADMIN")
     @GetMapping("/edit/{id}")
     public String chooseToEditArticle(Model model, @PathVariable Long id) {
         Article article = articleRepository.getOne(id);
@@ -116,17 +125,22 @@ public class NewsController {
         return "edit";
     }
 
+    @Transactional
+    @Secured("ADMIN")
     @PostMapping("/edit/{id}")
     public String editArticle(Model model, @PathVariable Long id, RedirectAttributes redirectAttributes,
             String title, String ingress, String authorNames, String content, String[] categoryNames,
             @Param("file") MultipartFile picture) throws IOException {
+
         Article article = articleRepository.getOne(id);
-        if (title == null || authorNames == null || content == null || article == null) {
+        if (title == null || authorNames == null || content == null || article == null
+                || title.isEmpty() || authorNames.isEmpty() || content.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.");
             return "redirect:/edit/" + id;
         }
         newsEditingService.editArticle(article, title, ingress, authorNames, content, categoryNames, picture);
         redirectAttributes.addFlashAttribute("message", "Editointi onnistui!");
+
         return "redirect:/control";
     }
 
