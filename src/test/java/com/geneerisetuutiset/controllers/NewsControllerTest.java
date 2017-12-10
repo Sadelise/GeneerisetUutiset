@@ -20,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -44,13 +45,29 @@ public class NewsControllerTest {
     private NewsEditingService newsEditingService;
     private String testTitle;
     private String testContent;
+    private String testIngress;
+    private String[] categories;
     private Article testArticle;
 
     @Before
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
         testTitle = "Uutinen";
-        testContent = "Uutisen hienoa sisältöä.";
+        testContent = "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. "
+                + "Uutisen hienoa sisältöä. ";
+        testIngress = "Uutisen ingressi.";
+        categories = new String[1];
+        categories[0] = "Vanhat";
         addNewArticle(testTitle, testContent);
         testArticle = articleRepository.findByTitle(testTitle);
     }
@@ -111,21 +128,10 @@ public class NewsControllerTest {
     @Test
     @Transactional
     public void sameArticleIsNotAddedTwice() throws Exception {
-        addNewArticle("DoubleArticle", "content");
-        MvcResult response = addNewArticle("DoubleArticle", "content");
+        addNewArticle("DoubleArticle", testContent);
+        MvcResult response = addNewArticle("DoubleArticle", testContent);
         String message = (String) response.getFlashMap().get("message");
         assertEquals(message, "Artikkelin lisäys epäonnistui. Artikkeli samalla otsikolla on jo olemassa!");
-    }
-
-    @Test
-    @Transactional
-    public void statusAndAttributesOkGettingArticle() throws Exception {
-        mockMvc.perform(get("/news/" + testArticle.getId()))
-                .andExpect(model().attributeExists("article"))
-                .andExpect(model().attributeExists("authors"))
-                .andExpect(model().attributeExists("published"))
-                .andExpect(model().attributeExists("timesRead"))
-                .andExpect(status().isOk());
     }
 
 //    @Test
@@ -137,9 +143,26 @@ public class NewsControllerTest {
 //        System.out.println("ARTICLE " + article);
 //        mockMvc.perform(delete("/news/" + article.getId()))
 //                .andExpect(status().is3xxRedirection());
-//        assertEquals(null, article);
-////        assertNull(article);
+//        assertNull(article);
 //    }
+    @Test
+    @Transactional
+    public void statusAndAttributesOkGettingArticle() throws Exception {
+        mockMvc.perform(get("/news/" + testArticle.getId()))
+                .andExpect(model().attributeExists("article"))
+                .andExpect(model().attributeExists("authors"))
+                .andExpect(model().attributeExists("published"))
+                .andExpect(model().attributeExists("timesRead"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void editingFailsIfBadInput() throws Exception {
+        MvcResult editArticle = editArticle(testTitle, "");
+        FlashMap flashMap = editArticle.getFlashMap();
+        String message = (String) flashMap.get("message");
+        assertEquals("Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.", message);
+    }
 
     @Test
     public void editingWorks() throws Exception {
@@ -153,16 +176,9 @@ public class NewsControllerTest {
         assertEquals("Editointi onnistui!", message);
     }
 
-    @Test
-    public void editingFailsIfBadInput() throws Exception {
-        FlashMap flashMap = editArticle(testTitle, null).getFlashMap();
-        String message = (String) flashMap.get("message");
-        assertEquals("Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.", message);
-    }
-
     private MvcResult editArticle(String title, String content) throws Exception {
         MvcResult result = mockMvc.perform(post("/edit/" + testArticle.getId())
-                .param("title", testTitle)
+                .param("title", title)
                 .param("authorNames", "Joku muu kirjoittaja")
                 .param("content", content))
                 .andExpect(status().is3xxRedirection())
@@ -171,11 +187,11 @@ public class NewsControllerTest {
     }
 
     private MvcResult addNewArticle(String title, String content) throws Exception {
-        String[] categories = new String[1];
         MvcResult response = mockMvc.perform(post("/news/new")
                 .param("title", title)
                 .param("authorNames", "kirjoittaja")
                 .param("content", content)
+                .param("ingress", testIngress)
                 .param("categoryNames", categories))
                 .andExpect(status().is3xxRedirection())
                 .andReturn();
