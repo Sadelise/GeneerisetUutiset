@@ -72,7 +72,6 @@ public class GeneerisetUutisetApp {
         account2.setRoles(roles2);
         accountRepository.save(account2);
 
-        account.setRoles(null);
         if (categoryRepository.findByName("Vanhat") == null) {
             Category category1 = new Category();
             category1.setName("Vanhat");
