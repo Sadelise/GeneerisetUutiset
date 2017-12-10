@@ -59,14 +59,14 @@ public class GeneerisetUutisetApp {
         roleRepository.save(role2);
         Account account = new Account();
         account.setUsername("will");
-        account.setPassword("admin");
+        account.setPassword("adminadmin");
         List<Role> roles = new ArrayList<>();
         roles.add(role);
         account.setRoles(roles);
         accountRepository.save(account);
         Account account2 = new Account();
         account2.setUsername("jack");
-        account2.setPassword("user");
+        account2.setPassword("useruser");
         List<Role> roles2 = new ArrayList<>();
         roles2.add(role2);
         account2.setRoles(roles2);
