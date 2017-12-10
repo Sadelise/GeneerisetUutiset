@@ -125,14 +125,14 @@ public class NewsControllerTest {
         addNewArticle("DoubleArticle", testContent);
         MvcResult response = addNewArticle("DoubleArticle", testContent);
         String message = (String) response.getFlashMap().get("message");
-        assertEquals(message, "Artikkelin lis�ys ep�onnistui. Artikkeli samalla otsikolla on jo olemassa!");
+        assertEquals(message, "Artikkelin lisäys epäonnistui. Artikkeli samalla otsikolla on jo olemassa!");
     }
 
 //    @Test
 //    @Transactional
 //    public void articleIsDeleted() throws Exception {
 //        addNewArticle("Poistettava", testContent);
-//        System.out.println("T�ss� ollaan");
+//        System.out.println("Tässä ollaan");
 //        Article article = articleRepository.findByTitle("Poistettava");
 //        System.out.println("ARTICLE " + article);
 //        mockMvc.perform(delete("/news/" + article.getId()))
@@ -155,7 +155,7 @@ public class NewsControllerTest {
         MvcResult editArticle = editArticle(testTitle, "");
         FlashMap flashMap = editArticle.getFlashMap();
         String message = (String) flashMap.get("message");
-        assertEquals("Editointi ep�onnistui! Artikkelilla t�ytyy olla ainakin otsikko, yksi kirjoittaja ja sis�lt��.", message);
+        assertEquals("Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.", message);
     }
 
     @Test
