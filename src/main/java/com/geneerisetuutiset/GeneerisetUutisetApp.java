@@ -55,7 +55,7 @@ public class GeneerisetUutisetApp {
         role.setRole("ADMIN");
         roleRepository.save(role);
         Role role2 = new Role();
-        role.setRole("USER");
+        role2.setRole("USER");
         roleRepository.save(role2);
         Account account = new Account();
         account.setUsername("will");
