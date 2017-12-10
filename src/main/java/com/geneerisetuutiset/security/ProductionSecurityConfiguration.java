@@ -36,8 +36,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
         http.authorizeRequests()
                 .antMatchers("/h2-console/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.POST, "/").authenticated()
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.POST, "/").authenticated();
         http.formLogin()
                 .permitAll();
 
