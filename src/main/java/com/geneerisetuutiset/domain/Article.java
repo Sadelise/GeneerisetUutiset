@@ -37,7 +37,7 @@ public class Article extends AbstractPersistable<Long> {
     private LocalDateTime published;
     @Size(min = 1, max = 10)
     @JsonIgnore
-    @Basic
+    @Basic(fetch = FetchType.LAZY)
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Author> authors;
     @Size(min = 1, max = 10)
