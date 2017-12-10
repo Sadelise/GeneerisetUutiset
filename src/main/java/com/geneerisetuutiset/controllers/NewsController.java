@@ -1,14 +1,11 @@
 package com.geneerisetuutiset.controllers;
 
 import com.geneerisetuutiset.domain.Article;
-import com.geneerisetuutiset.domain.Category;
 import com.geneerisetuutiset.repositories.ArticleRepository;
 import com.geneerisetuutiset.repositories.AuthorRepository;
 import com.geneerisetuutiset.repositories.CategoryRepository;
 import com.geneerisetuutiset.services.NewsEditingService;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -102,17 +99,7 @@ public class NewsController {
 
     @GetMapping("/news/category/{name}")
     public String getArticlesByCategory(Model model, @PathVariable String name) {
-        Category findByName = categoryRepository.findByName(name);
-        List<Article> allArticles = articleRepository.findAll();
-        List<Article> articles = new ArrayList<>();
-
-        for (Article article : allArticles) {
-            if (article.getCategories().contains(findByName)) {
-                articles.add(article);
-            }
-        }
-//        Category category = categoryRepository.findByName(name);
-        model.addAttribute("news", articles);//category.getArticles());
+        model.addAttribute("news", newsEditingService.getArticlesInCategory(name));
         model.addAttribute("filteringTitle", name);
         return "filtered";
     }

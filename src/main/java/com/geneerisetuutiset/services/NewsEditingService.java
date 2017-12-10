@@ -8,6 +8,8 @@ import com.geneerisetuutiset.repositories.AuthorRepository;
 import com.geneerisetuutiset.repositories.CategoryRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,5 +90,19 @@ public class NewsEditingService {
             }
             articleRepository.delete(article);
         }
+    }
+    
+    public List<Article> getArticlesInCategory(String name) {
+               Category findByName = categoryRepository.findByName(name);
+        List<Article> allArticles = articleRepository.findAll();
+        List<Article> articles = new ArrayList<>();
+
+        for (Article article : allArticles) {
+            if (article.getCategories().contains(findByName)) {
+                articles.add(article);
+            }
+        }
+        return articles;
+
     }
 }
