@@ -109,7 +109,6 @@ public class NewsController {
         return "filtered";
     }
 
-    @Transactional
     @GetMapping("/news/filtered/{filterBy}/{title}")
     public String getArticlesByPublishingTime(Model model, @PathVariable String filterBy, @PathVariable String title) {
         Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.Direction.DESC, filterBy);
