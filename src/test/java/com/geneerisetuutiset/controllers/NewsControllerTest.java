@@ -47,18 +47,18 @@ public class NewsControllerTest {
     public void setUp() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webAppContext).build();
         testTitle = "Uutinen";
-        testContent = "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. "
-                + "Uutisen hienoa sisältöä. ";
+        testContent = "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. "
+                + "Uutisen hienoa sisÃ¤ltÃ¶Ã¤. ";
         testIngress = "Uutisen ingressi.";
         categories = new String[1];
         categories[0] = "Vanhat";
@@ -125,14 +125,14 @@ public class NewsControllerTest {
         addNewArticle("DoubleArticle", testContent);
         MvcResult response = addNewArticle("DoubleArticle", testContent);
         String message = (String) response.getFlashMap().get("message");
-        assertEquals(message, "Artikkelin lisäys epäonnistui. Artikkeli samalla otsikolla on jo olemassa!");
+        assertEquals(message, "Artikkelin lisï¿½ys epï¿½onnistui. Artikkeli samalla otsikolla on jo olemassa!");
     }
 
 //    @Test
 //    @Transactional
 //    public void articleIsDeleted() throws Exception {
 //        addNewArticle("Poistettava", testContent);
-//        System.out.println("Tässä ollaan");
+//        System.out.println("Tï¿½ssï¿½ ollaan");
 //        Article article = articleRepository.findByTitle("Poistettava");
 //        System.out.println("ARTICLE " + article);
 //        mockMvc.perform(delete("/news/" + article.getId()))
@@ -155,7 +155,7 @@ public class NewsControllerTest {
         MvcResult editArticle = editArticle(testTitle, "");
         FlashMap flashMap = editArticle.getFlashMap();
         String message = (String) flashMap.get("message");
-        assertEquals("Editointi epäonnistui! Artikkelilla täytyy olla ainakin otsikko, yksi kirjoittaja ja sisältöä.", message);
+        assertEquals("Editointi epï¿½onnistui! Artikkelilla tï¿½ytyy olla ainakin otsikko, yksi kirjoittaja ja sisï¿½ltï¿½ï¿½.", message);
     }
 
     @Test

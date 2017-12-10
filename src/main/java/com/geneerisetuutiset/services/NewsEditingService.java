@@ -34,40 +34,40 @@ public class NewsEditingService {
             String replaceNames = authorNames.replace(" ", "");
             String[] names = replaceNames.split(",");
             for (String name : names) {
-//                Author author = authorRepository.findByName(name);
-//                if (author == null && name != null) {
-//                    author = new Author();
-//                    author.setName(name);
-//                    author.addArticle(article);
-//                    authorRepository.save(author);
-//                }
-//                article.addAuthor(author);
+                Author author = authorRepository.findByName(name);
+                if (author == null && name != null) {
+                    author = new Author();
+                    author.setName(name);
+                    author.addArticle(article);
+                    authorRepository.save(author);
+                }
+                article.addAuthor(author);
             }
         }
         articleRepository.save(article);
 
     }
 
-//    public void addCategoriesToArticle(Article article, String[] categoryNames) {
-//        if (categoryNames != null) {
-//            for (String name : categoryNames) {
-//                Category category = categoryRepository.findByName(name);
-//                if (category != null && name != null && !name.isEmpty()) {
-//                    category.addArticle(article);
-//                    article.addCategory(category);
-//                    categoryRepository.save(category);
-//                }
-//            }
-//        }
-//        articleRepository.save(article);
-//    }
+    public void addCategoriesToArticle(Article article, String[] categoryNames) {
+        if (categoryNames != null) {
+            for (String name : categoryNames) {
+                Category category = categoryRepository.findByName(name);
+                if (category != null && name != null && !name.isEmpty()) {
+                    category.addArticle(article);
+                    article.addCategory(category);
+                    categoryRepository.save(category);
+                }
+            }
+        }
+        articleRepository.save(article);
+    }
 
     public void editArticle(Article article, String title, String ingress, String authorNames, String content, String[] categoryNames, MultipartFile picture) throws IOException {
         if (picture != null) {
             article.setPicture(picture.getBytes());
         }
         addAuthorsToArticle(article, authorNames);
-//        addCategoriesToArticle(article, categoryNames);
+        addCategoriesToArticle(article, categoryNames);
         article.setContent(content);
         article.setIngress(ingress);
         article.setPublished(LocalDateTime.now());
