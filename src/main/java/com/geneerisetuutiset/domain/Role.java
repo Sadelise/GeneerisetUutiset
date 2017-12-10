@@ -23,6 +23,6 @@ public class Role extends AbstractPersistable<Long> {
     @Id
     private Long id;
     @NotEmpty
-    @Size(min = 10, max = 20)
+    @Size(min = 3, max = 20)
     private String role;
 }
