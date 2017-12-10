@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Geneeriset Uutiset</title>
+        <link href="css/style.css" rel="stylesheet"/>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -13,17 +15,13 @@
 
             <h1>Geneeriset Uutiset</h1>
             <h2><span th:text="${filteringTitle}"/></h2>
-            <table>
-                <tr>
-                    <th></th>
-                    <th></th>
-                </tr>
 
-                <tr th:each="article : ${news}">
-                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></td>
-                    <td><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.published}">published</a></td>
-                </tr>
-            </table>
+            <ul th:each="article : ${news}">
+                <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.title}">otsikko</a></li>
+                <li><a th:href="@{/news/{article}(article=${article.id})}" th:text="${article.published}">published</a></li>
+            </ul>
+
+
         </div>
     </body>
 </html>
