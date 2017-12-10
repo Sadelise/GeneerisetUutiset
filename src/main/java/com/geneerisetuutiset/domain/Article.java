@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @NoArgsConstructor
@@ -28,7 +29,8 @@ public class Article extends AbstractPersistable<Long> {
     private String title;
     @Size(min = 10, max = 100)
     private String ingress;
-    @Lob
+    @Type(type = "org.hibernate.type.PrimitiveByteArrayBlobType")
+//    @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] picture;
     @Size(min = 10, max = 1000)
