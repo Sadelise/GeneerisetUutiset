@@ -1,5 +1,23 @@
-Sovelluksessa on paljonkin parannettavaa t‰ll‰ hetkell‰. Ulkoasu voisi n‰ytt‰‰ houkuttelevammalta. Uutiset eiv‰t listaudu jos niit‰ on paljon. 
+# Ohjelman kaipaamia parannuksia ja ongelmia
 
-Kuka tahansa pystyy hallinnoimaan sivustoa. Olisi parempi jos vain joillain nimetyill‰ yll‰pit‰jill‰ olisi moinen mahdollisuus. 
+### Pahat ongelmat
+- Login uudelleenohjaa css tiedostoon tai bootstrapin l‰hdetiedostoon riippuen j‰rjestyksest‰ html-sivulla. H‰mment‰v‰ virhe, jonka syy olisi eritt‰in hauska tiet‰‰.
+- Ilmeisesti aikaisempaan liittyv‰ virhe, jossa css-tiedosto ei ole k‰ytˆss‰ ennen kuin k‰ytt‰j‰ kirjautuu sis‰‰n. 
+- Liian pitk‰t tekstit aiheuttavat virheen uutista julkaistaessa/editoidessa. (Tekstin pituus on s‰‰detty Article-luokassa, mutta jotain muutakin t‰ytyisi tehd‰.)
+- Virheit‰ ei k‰sitell‰.
 
-Deletoinnissa voisi olla varmistus ennen kuin artikkeli oikeasti poistetaan.
+### Puutteet toiminnallisuudessa
+- Suosituimmat-listaus listaa nyt kaikkien klikkausten perusteella, eik‰ vain tietyn ajanjakson perusteella.
+- Sivutusta ei ole ollenkaan, eli suurilla tietom‰‰rill‰ tulee ongelmia.
+- Deletoinnissa voisi olla varmistus ennen kuin artikkeli oikeasti poistetaan.
+- Kirjoittajia saa vain lis‰tty‰, ei poistettua. 
+- K‰ytt‰jien hallinta puuttuu.
+
+### L‰hdekoodin puutteet
+- Kategorian perusteella hakeminen on toteutettu tehottomasti. ("Pikaratkaisu", koska tuotantoversiossa oli jokin ongelma aikaisemman, paremman toteutuksen kanssa.)
+- Deletoinnin integraatiotestaaminen ei onnistu "StackOverFlow"-errorin takia. Itse deletointi-toiminto kuitenkin toimii n‰enn‰isen hyvin.
+
+### Tyyliongelmat
+- Uutisen julkaisup‰iv‰m‰‰r‰ voisi olla formatoitu k‰ytt‰j‰yst‰v‰llisemp‰‰n muotoon. 
+- Ulkoasu voisi n‰ytt‰‰ houkuttelevammalta. 
+- K‰yttˆliittym‰ voisi olla intuitiivisempi, etenkin hallintapaneelin ja editoinnin osalta.
